@@ -1,5 +1,5 @@
-name: Telegram Action
-description:
+name: Telegram Bot Action
+description: A GitHub Action to send messages via Telegram Bot API
 
 inputs:
   token:

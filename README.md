@@ -1,6 +1,6 @@
 # Telegram Action
 
-This GitHub Action allows you to send messages to a Telegram chat using a bot.
+A GitHub Action to send messages via Telegram Bot API.
 
 ## Inputs
 - `token`: (Required) The Telegram bot token.
