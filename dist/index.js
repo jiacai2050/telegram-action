@@ -27251,18 +27251,17 @@ try {
   const token = coreExports.getInput("token");
   const message = coreExports.getInput("message");
   const messageFile = coreExports.getInput("message-file");
-
-  let mdContent;
+  const parseMode = coreExports.getInput("parse-mode");
+  let rawMessage;
   if (message) {
-    mdContent = message;
+    rawMessage = message;
   } else if (mdFile) {
-    mdContent = require$$1.readFileSync(messageFile, { encoding: "utf8" });
+    rawMessage = require$$1.readFileSync(messageFile, { encoding: "utf8" });
   } else {
     throw new Error("Either md-file or md-body must be provided.");
   }
 
-  const ret = await sendMessage(token, chatId, mdContent);
-  coreExports.info(`Send message result: ${JSON.stringify(ret)}`);
+  const ret = await sendMessage(token, chatId, rawMessage, parseMode);
   coreExports.setOutput("message-id", ret["message_id"]);
   coreExports.setOutput("date", ret["date"]);
   coreExports.setOutput("text", ret["text"]);
@@ -27274,15 +27273,16 @@ try {
 }
 
 // https://core.telegram.org/bots/api#sendmessage
-async function sendMessage(token, chatId, message) {
+async function sendMessage(token, chatId, message, parseMode) {
   const api = `https://api.telegram.org/bot${token}/sendMessage`;
   const payload = {
     text: message,
     chat_id: chatId,
-    parse_mode: "MarkdownV2",
   };
+  if (parseMode && parseMode !== "plain") {
+    payload["parse_mode"] = parseMode;
+  }
 
-  console.log(`sendTelegram: msg:${payload}, chat:${chatId}`);
   const resp = await fetch(api, {
     method: "POST",
     headers: {

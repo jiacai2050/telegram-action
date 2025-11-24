@@ -14,6 +14,10 @@ inputs:
   message-file:
     description: The path to the file containing the message to be sent.
     required: false
+  parse-mode:
+    description: "Mode for parsing entities in the message text. Options: MarkdownV2, HTML, or leave empty for plain text."
+    required: false
+    default: ""
 
 outputs:
   url:

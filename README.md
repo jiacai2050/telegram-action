@@ -5,8 +5,24 @@ This GitHub Action allows you to send messages to a Telegram chat using a bot.
 ## Inputs
 - `token`: (Required) The Telegram bot token.
 - `chat-id`: (Required) The chat ID where the message will be sent (in the format `@channelusername` or negative number if it's private channel). See [how to get chat ID](https://stackoverflow.com/a/67274937/2163429) for more details.
-- `message`: (Optional) The message text to be sent.
+- `message`: (Optional) The message text to be sent. Only MarkdownV2 formatting is supported. 
 - `message-file`: (Optional) The path to a file containing the message text. **Either `message` or `message-file` must be provided.**
+- `parse-mode`: (Optional) The parse mode of the message. Default is `plain`. Other options include `HTML` and `MarkdownV2`. 
+
+### MarkdownV2 
+When using [MarkdownV2 formatting](https://core.telegram.org/bots/api#markdownv2-style), certain characters must be escaped with a backslash (`\`). The characters that need to be escaped are:
+```plaintext
+_ * [ ] ( ) ~ ` > # + - = | { } . !
+```
+For example, to send the message `Hello *World*!`, you would write it as `Hello \*World\*\!`.
+
+If you are dynamically generating message content, you can use the following JavaScript function to escape special characters:
+
+```js
+function normalize(title) {
+  return title.replace(/([-_*\[\]()~`>#+=|{}.!])/g, "\\$1");
+}
+```
 
 ## Outputs
 - `message-id`: The ID of the sent message.
@@ -36,8 +52,8 @@ This GitHub Action allows you to send messages to a Telegram chat using a bot.
     token: ${{ secrets.TELEGRAM_TOKEN }}
     chat-id: "@channelName"
     message: |
-      # Hello Telegram
-      This is a post from GitHub Actions!
+      __Hello Telegram__
+      This is a post from GitHub Actions\!
 ```
 
 ### Print Outputs
