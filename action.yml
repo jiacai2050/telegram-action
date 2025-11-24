@@ -1,0 +1,28 @@
+name: Telegram Action
+description:
+
+inputs:
+  token:
+    description: Telegram bot token
+    required: true
+  chat-id:
+    description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    required: true
+  message:
+    description: Message to be sent
+    required: false
+  message-file:
+    description: The path to the file containing the message to be sent.
+    required: false
+
+outputs:
+  url:
+    description: URL of the created telegraph post
+  title:
+    description: Title of the created telegraph post
+  description:
+    description: Description of the created telegraph post
+
+runs:
+  using: node20
+  main: dist/index.js
