@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A GitHub Action for sending Telegram messages",
   "license": "MIT",
-  "author": "",
+  "author": "Jiacai Liu <dev@liujiacai.net>",
   "type": "module",
   "main": "index.js",
   "scripts": {
